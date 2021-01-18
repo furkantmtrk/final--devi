@@ -1,0 +1,123 @@
+<nav class="navbar navbar-expand-lg navbar-secondary bg-secondary">
+  <div class="container-fluid">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="btn btn-warning" href="/" role="button">Anasayfa</a>
+      </li>
+      <li class="nav-item">
+        <a class="btn btn-info ml-3" href="/kayitlar" role="button">Ekle Düzenle Kiralık</a>
+    </li>
+    <li class="nav-item">
+      <a class="btn btn-info ml-3" href="/satiliklar" role="button">Ekle Düzenle Satılık</a>
+  </li>
+  <li class="nav-item">
+    <a class="btn btn-info ml-3" href="/hurdalar" role="button">Ekle Düzenle Hurda</a>
+</li>
+
+        <li class="nav-item">
+          <a class="btn btn-primary ml-3" href="/login" role="button">Giriş Yap</a>
+      </li>
+        <li class="nav-item ml-3">
+          <button class="btn btn-danger" (click)="OturumuKapat()">Oturumu Kapat</button>
+      </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid mt-5">
+    <div class="row">
+      <div class="col-md-2"></div>
+        <div class="col-md-8">
+
+          <div class="bg-light "><h1 class="primary">Hurda Araçlar</h1></div>
+            <table class="table table-hove table-secondary">
+                <thead>
+                    <th>Araç Adı</th>
+                    <th>Araç Markası</th>
+                    <th>Yakıt</th>
+                    <th>Vites</th>
+                    <th>Fiyat</th>
+                    <th>Durumu</th>
+                    <th>Durumu Güncelle</th>
+                    <th>Düzenle</th>
+                    <th>Sil</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let hurda of hurdalar">
+                        <td>{{hurda.aracAdiHur}}</td>
+                        <td>{{hurda.aracMarkHur}}</td>
+                        <td>{{hurda.yakitHur}}</td>
+                        <td>{{hurda.vitesHur}}</td>
+                        <td>{{hurda.fiyatHur}}</td>
+
+
+                        <td>
+                            <span class="badge badge-pill bg-success text-white" *ngIf="hurda.islem">Tamamlandı</span>
+                            <span class="badge badge-pill bg-danger text-white" *ngIf="!hurda.islem">Bekliyor</span>
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-success btn-sm" (click)="TamamlaIptal(hurda,true)" *ngIf="!hurda.islem">Tamamlandı Yap</button>
+                            <button class="btn btn-danger btn-sm" (click)="TamamlaIptal(hurda,false)" *ngIf="hurda.islem">Tamamlandı İptal Et</button>
+
+                        </td>
+                        <td><button class="btn btn-warning" (click)="HurdaDuzenle(hurda)">Düzenle</button></td>
+                        <td><button class="btn btn-danger" (click)="HurdaSil(hurda)">Sil</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>
+        </div>
+        <div class="row">
+          <div class="col-md-4"></div>
+
+        <div class="col-md-4">
+            <h4>Düzenle</h4>
+            <hr>
+            <form #frm="ngForm" (submit)="Kaydet()">
+                <div class="form-group">
+                    <label>Araç Adı</label>
+                    <input type="text" class="form-control" name="aracAdıHur" [(ngModel)]="secHurda.aracAdiHur" required>
+                    <input type="hidden" class="form-control" name="keyHur" [(ngModel)]="secHurda.keyHur">
+                </div>
+                <div class="form-group">
+                    <label>Araç Markası</label>
+                    <input type="text" class="form-control" name="aracMarkasiHur" [(ngModel)]="secHurda.aracMarkHur" required>
+                </div>
+                <div class="form-group">
+                    <label>Yakıt</label>
+                    <input type="text" class="form-control" name="yakitHur" [(ngModel)]="secHurda.yakitHur" required>
+                </div>
+                <div class="form-group">
+                  <label>Vites</label>
+                  <input type="text" class="form-control" name="vitesHur" [(ngModel)]="secHurda.vitesHur" required>
+              </div>
+                <div class="form-group">
+                  <label>Fiyat</label>
+                  <input type="number" class="form-control" name="fiyatHur" [(ngModel)]="secHurda.fiyatHur" required>
+              </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Kaydet" class="btn btn-primary" [disabled]="frm.invalid">
+
+                </div>
+
+            </form>
+            <button class="btn btn-danger" (click)="Vazgec()">Vazgeç</button>
+
+            <div [ngClass]="sonuc.islem ? 'alert alert-success':'alert alert-danger'" *ngIf="sonuc.mesaj?.length>0">
+                {{sonuc.mesaj}}</div>
+
+
+        </div>
+      </div>
+
+    </div>
+</div>
+

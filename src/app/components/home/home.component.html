@@ -1,0 +1,342 @@
+<div class="container-fluid">
+  <div class="row">
+    <nav class="navbar navbar-expand-lg navbar-secondary bg-secondary">
+      <div class="container-fluid bg bg-secondary">
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse " id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="btn btn-warning" href="/" role="button">Anasayfa</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-info ml-3" href="/kayitlar" role="button">Ekle Düzenle Kiralık</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-info ml-3" href="/satiliklar" role="button">Ekle Düzenle Satılık</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-info ml-3" href="/hurdalar" role="button">Ekle Düzenle Hurda</a>
+            </li>
+
+
+            <li class="nav-item ">
+              <a type="button" class="btn btn-primary ml-3 float-right" href="/login" role="button">Giriş Yap</a>
+            </li>
+            <li class="nav-item ml-3">
+              <button class="btn btn-danger" (click)="OturumuKapat()">Oturumu Kapat</button>
+            </li>
+
+          </ul>
+
+        </div>
+      </div>
+
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="accordion" id="accordionExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                aria-expanded="true" aria-controls="collapseOne">
+                KİRALIK ARAÇLAR
+              </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+              data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div class="container mt-5">
+                  <div class="row alert alert-succes" *ngIf="detay">
+                    <div class="col-md-6">
+                      <h5>Araç Adı</h5>
+                      <p>{{secKayit.aracAdi}}</p>
+                      <h5>Araç Markası</h5>
+                      <p>{{secKayit.aracMark}}</p>
+                      <h5>Yakıt</h5>
+                      <p>{{secKayit.yakit}}</p>
+                      <h5>Vites</h5>
+                      <p>{{secKayit.vites}}</p>
+                      <h5>Fiyatı</h5>
+                      <p>{{secKayit.fiyat}}</p>
+                    </div>
+                    <div class="col-md-6">
+                      <h5>Kayıt Tarihi</h5>
+                      <p>{{secKayit.kayTarih | date:'dd.MM.yyyy HH:mm:sss'}}</p>
+                      <h5>Düzenleme Tarihi</h5>
+                      <p>{{secKayit.duzTarih | date:'dd.MM.yyyy HH:mm:sss'}}</p>
+
+                      <h5>Durumu</h5>
+                      <p><span class="badge badge-pill bg-success text-white" *ngIf="secKayit.islem">Kiralandı</span>
+                        <span class="badge badge-pill bg-danger text-white" *ngIf="!secKayit.islem">Bekliyor</span>
+                      </p>
+                      <button class="btn btn-outline-danger btn-sm" (click)="detay=false;">Kapat</button>
+
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h4>ARAÇLAR</h4>
+                      <table class="table">
+                        <thead>
+                          <td>Araç Adı</td>
+                          <td>Araç Markası</td>
+                          <td>Yakıt</td>
+                          <td>Vites</td>
+                          <td>Fiyat</td>
+                          <td>Durumu</td>
+
+                          <td>Detay</td>
+
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let kayit  of kayitlar">
+                            <td>{{kayit.aracAdi}}</td>
+                            <td>{{kayit.aracMark}}</td>
+                            <td>{{kayit.yakit}}</td>
+                            <td>{{kayit.vites}}</td>
+                            <td>{{kayit.fiyat}}</td>
+
+
+                            <td>
+                              <span class="badge badge-pill bg-success text-white" *ngIf="kayit.islem">Kiralandı</span>
+                              <span class="badge badge-pill bg-danger text-white" *ngIf="!kayit.islem">Bekliyor</span>
+                            </td>
+
+
+                            <td><button class="btn btn-outline-info btn-sm"
+                                (click)="KayitSec(kayit);detay=true;">Detay</button>
+                            </td>
+
+
+                          </tr>
+                        </tbody>
+
+
+                      </table>
+                    </div>
+                  </div>
+
+                </div>
+
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+
+
+    <div class="container">
+      <div class="row">
+        <div class="accordion" id="accordionExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                aria-expanded="true" aria-controls="collapseOne">
+                SATILIK ARAÇLAR
+              </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+              data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div class="container mt-5">
+                  <div class="row alert alert-succes" *ngIf="detay">
+                    <div class="col-md-6">
+                      <h5>Araç Adı</h5>
+                      <p>{{secSatilik.aracAdiSat}}</p>
+                      <h5>Araç Markası</h5>
+                      <p>{{secSatilik.aracMarkSat}}</p>
+                      <h5>Yakıt</h5>
+                      <p>{{secSatilik.yakitSat}}</p>
+                      <h5>Vites</h5>
+                      <p>{{secSatilik.vitesSat}}</p>
+                      <h5>Fiyatı</h5>
+                      <p>{{secSatilik.fiyatSat}}</p>
+                    </div>
+                    <div class="col-md-6">
+                      <h5>Kayıt Tarihi</h5>
+                      <p>{{secSatilik.kayTarihSat | date:'dd.MM.yyyy HH:mm:sss'}}</p>
+                      <h5>Düzenleme Tarihi</h5>
+                      <p>{{secSatilik.duzTarihSat | date:'dd.MM.yyyy HH:mm:sss'}}</p>
+
+                      <h5>Durumu</h5>
+                      <p><span class="badge badge-pill bg-success text-white" *ngIf="secSatilik.islemSat">Satıldı</span>
+                        <span class="badge badge-pill bg-danger text-white" *ngIf="!secSatilik.islemSat">Bekliyor</span>
+                      </p>
+                      <button class="btn btn-outline-danger btn-sm" (click)="detay=false;">Kapat</button>
+
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h4>SATILIK ARAÇLAR</h4>
+                      <table class="table">
+                        <thead>
+                          <td>Araç Adı</td>
+                          <td>Araç Markası</td>
+                          <td>Yakıt</td>
+                          <td>Vites</td>
+                          <td>Fiyat</td>
+                          <td>Durumu</td>
+
+                          <td>Detay</td>
+
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let satilik  of satiliklar">
+                            <td>{{satilik.aracAdiSat}}</td>
+                            <td>{{satilik.aracMarkSat}}</td>
+                            <td>{{satilik.yakitSat}}</td>
+                            <td>{{satilik.vitesSat}}</td>
+                            <td>{{satilik.fiyatSat}}</td>
+
+
+                            <td>
+                              <span class="badge badge-pill bg-success text-white" *ngIf="satilik.islem">Satıldı</span>
+                              <span class="badge badge-pill bg-danger text-white" *ngIf="!satilik.islem">Bekliyor</span>
+                            </td>
+
+
+                            <td><button class="btn btn-outline-info btn-sm"
+                                (click)="SatilikSec(satilik);detay=true;">Detay</button>
+                            </td>
+
+
+                          </tr>
+                        </tbody>
+
+
+                      </table>
+                    </div>
+                  </div>
+
+                </div>
+
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+
+
+    <div class="container">
+      <div class="row">
+        <div class="accordion" id="accordionExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                aria-expanded="true" aria-controls="collapseOne">
+                HURDA ARAÇLAR
+              </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+              data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div class="container mt-5">
+                  <div class="row alert alert-succes" *ngIf="detay">
+                    <div class="col-md-6">
+                      <h5>Araç Adı</h5>
+                      <p>{{secHurda.aracAdiHur}}</p>
+                      <h5>Araç Markası</h5>
+                      <p>{{secHurda.aracMarkHur}}</p>
+                      <h5>Yakıt</h5>
+                      <p>{{secHurda.yakitHur}}</p>
+                      <h5>Vites</h5>
+                      <p>{{secHurda.vitesHur}}</p>
+                      <h5>Fiyatı</h5>
+                      <p>{{secHurda.fiyatHur}}</p>
+                    </div>
+                    <div class="col-md-6">
+                      <h5>Kayıt Tarihi</h5>
+                      <p>{{secHurda.kayTarihHur | date:'dd.MM.yyyy HH:mm:sss'}}</p>
+                      <h5>Düzenleme Tarihi</h5>
+                      <p>{{secHurda.duzTarihHur | date:'dd.MM.yyyy HH:mm:sss'}}</p>
+
+                      <h5>Durumu</h5>
+                      <p><span class="badge badge-pill bg-success text-white" *ngIf="secHurda.islemHur">Satıldı</span>
+                        <span class="badge badge-pill bg-danger text-white" *ngIf="!secHurda.islemHur">Bekliyor</span>
+                      </p>
+                      <button class="btn btn-outline-danger btn-sm" (click)="detay=false;">Kapat</button>
+
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h4>HURDA ARAÇLAR</h4>
+                      <table class="table">
+                        <thead>
+                          <td>Araç Adı</td>
+                          <td>Araç Markası</td>
+                          <td>Yakıt</td>
+                          <td>Vites</td>
+                          <td>Fiyat</td>
+                          <td>Durumu</td>
+
+                          <td>Detay</td>
+
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let hurda  of hurdalar">
+                            <td>{{hurda.aracAdiHur}}</td>
+                            <td>{{hurda.aracMarkHur}}</td>
+                            <td>{{hurda.yakitHur}}</td>
+                            <td>{{hurda.vitesHur}}</td>
+                            <td>{{hurda.fiyatHur}}</td>
+
+
+                            <td>
+                              <span class="badge badge-pill bg-success text-white" *ngIf="hurda.islem">Satıldı</span>
+                              <span class="badge badge-pill bg-danger text-white" *ngIf="!hurda.islem">Bekliyor</span>
+                            </td>
+
+
+                            <td><button class="btn btn-outline-info btn-sm"
+                                (click)="HurdaSec(hurda);detay=true;">Detay</button>
+                            </td>
+
+
+                          </tr>
+                        </tbody>
+
+
+                      </table>
+                    </div>
+                  </div>
+
+                </div>
+
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+</div>
